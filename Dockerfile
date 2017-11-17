@@ -24,6 +24,16 @@ RUN wget https://github.com/jwilder/docker-gen/releases/download/$DOCKER_GEN_VER
  && tar -C /usr/local/bin -xvzf docker-gen-linux-amd64-$DOCKER_GEN_VERSION.tar.gz \
  && rm /docker-gen-linux-amd64-$DOCKER_GEN_VERSION.tar.gz
 
+ENV KUBE_GEN_VERSION 0.2.0
+
+ADD https://storage.googleapis.com/kubernetes-release/release/v1.8.3/bin/linux/amd64/kubectl /usr/local/bin
+RUN wget https://github.com/kylemcc/kube-gen/releases/download/$KUBE_GEN_VERSION/kube-gen-linux-amd64-$KUBE_GEN_VERSION.tar.gz \
+  && tar -C /usr/local/bin -xvzf kube-gen-linux-amd64-$KUBE_GEN_VERSION.tar.gz \
+  && rm kube-gen-linux-amd64-$KUBE_GEN_VERSION.tar.gz \
+  && chmod +x /usr/local/bin/kubectl \
+  && chmod +x /usr/local/bin/kube-gen
+
+
 COPY network_internal.conf /etc/nginx/
 
 COPY . /app/

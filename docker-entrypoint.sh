@@ -1,6 +1,12 @@
 #!/bin/bash
 set -e
 
+if [ "$KUBE" == "true" ]; then
+  KUBEPREFIX="kube"
+  KUBENOTIFY="type pods -type services -wait 2s:10s -post-cmd"
+  KUBEPROXY="kubectl proxy"
+  export KUBEPREFIX KUBENOTIFY KUBEPROXY
+else
 # Warn if the DOCKER_HOST socket does not exist
 if [[ $DOCKER_HOST = unix://* ]]; then
 	socket_file=${DOCKER_HOST#unix://}
@@ -12,6 +18,7 @@ if [[ $DOCKER_HOST = unix://* ]]; then
 		EOT
 		socketMissing=1
 	fi
+fi
 fi
 
 # Generate dhparam file if required

@@ -11,19 +11,19 @@ def nginx_tmpl():
     the jwilder/nginx-proxy:test image
     """
     script_dir = os.path.dirname(__file__)
-    logging.info("extracting nginx.tmpl from jwilder/nginx-proxy:test")
+    logging.info("extracting nginx-docker.tmpl from jwilder/nginx-proxy:test")
     docker_client = docker.from_env()
     print(docker_client.containers.run(
         image='jwilder/nginx-proxy:test',
         remove=True,
         volumes=['{current_dir}:{current_dir}'.format(current_dir=script_dir)],
         entrypoint='sh',
-        command='-xc "cp /app/nginx.tmpl {current_dir} && chmod 777 {current_dir}/nginx.tmpl"'.format(
+        command='-xc "cp /app/nginx-docker.tmpl {current_dir} && chmod 777 {current_dir}/nginx-docker.tmpl"'.format(
             current_dir=script_dir),
         stderr=True))
     yield
-    logging.info("removing nginx.tmpl")
-    os.remove(os.path.join(script_dir, "nginx.tmpl"))
+    logging.info("removing nginx-docker.tmpl")
+    os.remove(os.path.join(script_dir, "nginx-docker.tmpl"))
 
 
 def test_unknown_virtual_host_is_503(nginx_tmpl, docker_compose, nginxproxy):

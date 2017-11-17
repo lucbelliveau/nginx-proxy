@@ -159,7 +159,7 @@ $ curl -H "Host: whoami.local" localhost
 I'm 5b129ab83266
 ```
 
-To run nginx proxy as a separate container you'll need to have [nginx.tmpl](https://github.com/jwilder/nginx-proxy/blob/master/nginx.tmpl) on your host system.
+To run nginx proxy as a separate container you'll need to have [nginx-docker.tmpl](https://github.com/jwilder/nginx-proxy/blob/master/nginx-docker.tmpl) on your host system.
 
 First start nginx with a volume:
 
@@ -172,7 +172,7 @@ Then start the docker-gen container with the shared volume and template:
 $ docker run --volumes-from nginx \
     -v /var/run/docker.sock:/tmp/docker.sock:ro \
     -v $(pwd):/etc/docker-gen/templates \
-    -t jwilder/docker-gen -notify-sighup nginx -watch /etc/docker-gen/templates/nginx.tmpl /etc/nginx/conf.d/default.conf
+    -t jwilder/docker-gen -notify-sighup nginx -watch /etc/docker-gen/templates/nginx-docker.tmpl /etc/nginx/conf.d/default.conf
 ```
 
 Finally, start your containers with `VIRTUAL_HOST` environment variables.

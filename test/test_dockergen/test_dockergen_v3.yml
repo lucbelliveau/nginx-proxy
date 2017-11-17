@@ -9,10 +9,10 @@ services:
 
   dockergen:
     image: jwilder/docker-gen
-    command: -notify-sighup nginx -watch /etc/docker-gen/templates/nginx.tmpl /etc/nginx/conf.d/default.conf
+    command: -notify-sighup nginx -watch /etc/docker-gen/templates/nginx-docker.tmpl /etc/nginx/conf.d/default.conf
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - ./nginx.tmpl:/etc/docker-gen/templates/nginx.tmpl
+      - ./nginx-docker.tmpl:/etc/docker-gen/templates/nginx-docker.tmpl
       - nginx_conf:/etc/nginx/conf.d
 
   web:
